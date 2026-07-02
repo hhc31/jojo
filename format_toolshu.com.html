@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>胡泓辰的考试</title>
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+        body {
+
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+
+            background: #e8ecf1;
+
+            padding: 20px;
+
+            display: flex;
+
+            justify-content: center;
+
+        }
+
+        .container {
+
+            max-width: 420px;
+
+            width: 100%;
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 20px 18px 26px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+        }
+
+        /* ===== 头部 ===== */
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 2px;
+
+        }
+
+        .header h1 {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            color: #1a1a1a;
+
+        }
+
+        .header .switch-btn {
+
+            background: #e8ecf1;
+
+            border: none;
+
+            padding: 4px 14px;
+
+            border-radius: 14px;
+
+            font-size: 13px;
+
+            color: #333;
+
+            cursor: pointer;
+
+        }
+
+        .exam-info {
+
+            font-size: 13px;
+
+            color: #888;
+
+            margin-bottom: 16px;
+
+            padding-bottom: 12px;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+        /* ===== 成绩总分 - 带背景条 ===== */
+
+        .score-row {
+
+            background: #f5f7fa;
+
+            border-radius: 8px;
+
+            padding: 12px 16px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+
+            border: 1px solid #e8ecf1;
+
+        }
+
+        .score-row .label {
+
+            font-size: 16px;
+
+            font-weight: 500;
+
+            color: #1a1a1a;
+
+        }
+
+        .score-row .total {
+
+            font-size: 26px;
+
+            font-weight: 700;
+
+            color: #1a1a1a;
+
+        }
+
+        .score-row .total small {
+
+            font-size: 16px;
+
+            font-weight: 400;
+
+            color: #999;
+
+        }
+
+        /* ===== 成绩表格 ===== */
+
+        .table-header {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            padding: 6px 4px 6px;
+
+            border-bottom: 2px solid #1a1a1a;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #1a1a1a;
+
+            margin-bottom: 2px;
+
+        }
+
+        .table-header span:last-child {
+
+            text-align: right;
+
+        }
+
+        .subject-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            padding: 9px 4px;
+
+            border-bottom: 1px solid #f0f0f0;
+
+            align-items: center;
+
+        }
+
+        .subject-row .name {
+
+            font-size: 15px;
+
+            color: #1a1a1a;
+
+        }
+
+        .subject-row .score-wrap {
+
+            text-align: right;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 4px;
+
+        }
+
+        .subject-row .score-wrap input {
+
+            width: 64px;
+
+            padding: 4px 6px;
+
+            text-align: right;
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+            border: 1.5px solid #ddd;
+
+            border-radius: 6px;
+
+            background: white;
+
+            color: #1a1a1a;
+
+            transition: border 0.2s;
+
+        }
+
+        .subject-row .score-wrap input:focus {
+
+            outline: none;
+
+            border-color: #4a90d9;
+
+            box-shadow: 0 0 0 3px rgba(74,144,217,0.12);
+
+        }
+
+        .subject-row .score-wrap input.error {
+
+            border-color: #e74c3c;
+
+            background: #fff8f8;
+
+        }
+
+        .subject-row .score-wrap .max {
+
+            font-size: 14px;
+
+            color: #999;
+
+        }
+
+        /* ===== 考后三步 ===== */
+
+        .section-title {
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            color: #1a1a1a;
+
+            margin: 22px 0 10px;
+
+        }
+
+        .steps {
+
+            display: flex;
+
+            gap: 6px;
+
+            margin-bottom: 4px;
+
+        }
+
+        .steps .step {
+
+            flex: 1;
+
+            background: #f5f6f8;
+
+            border-radius: 8px;
+
+            padding: 10px 4px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color: #333;
+
+            border: 1px solid #e8ecf1;
+
+        }
+
+        .steps .step .num {
+
+            display: block;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            color: #1a1a1a;
+
+            margin-bottom: 2px;
+
+        }
+
+        /* ===== 考后任务 ===== */
+
+        .task-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr 1fr;
+
+            gap: 6px;
+
+            margin-top: 4px;
+
+        }
+
+        .task-grid .task {
+
+            background: #f5f6f8;
+
+            border-radius: 6px;
+
+            padding: 8px 4px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color: #333;
+
+            border: 1px solid #e8ecf1;
+
+        }
+
+        /* ===== 重置按钮 ===== */
+
+        .reset-wrap {
+
+            margin-top: 20px;
+
+            text-align: center;
+
+        }
+
+        .reset-wrap button {
+
+            background: #e8ecf1;
+
+            border: none;
+
+            padding: 7px 26px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            color: #555;
+
+            cursor: pointer;
+
+            transition: background 0.2s;
+
+        }
+
+        .reset-wrap button:hover {
+
+            background: #d5dae0;
+
+        }
+
+        @media (max-width: 400px) {
+
+            .container { padding: 14px 12px 20px; }
+
+            .subject-row .score-wrap input { width: 54px; font-size: 14px; }
+
+            .task-grid { grid-template-columns: 1fr 1fr; }
+
+            .score-row .total { font-size: 22px; }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 头部 -->
+
+    <div class="header">
+
+        <h1>胡泓辰的考试</h1>
+
+        <button class="switch-btn">切换考试</button>
+
+    </div>
+
+    <div class="exam-info">古田县2025-2026学年第二学期七年级期末质量检测</div>
+
+    <!-- 总分 - 带背景条 -->
+
+    <div class="score-row">
+
+        <span class="label">成绩</span>
+
+        <span class="total" id="totalDisplay">312 <small>/ 700</small></span>
+
+    </div>
+
+    <!-- 成绩表 -->
+
+    <div class="table-header">
+
+        <span>科目</span>
+
+        <span>分数</span>
+
+    </div>
+
+    <div id="subjectList">
+
+        <!-- JS 动态渲染 -->
+
+    </div>
+
+    <!-- 考后三步 -->
+
+    <div class="section-title">考后"三步"巩固提升</div>
+
+    <div class="steps">
+
+        <div class="step"><span class="num">1.</span> 第一步 学情报告</div>
+
+        <div class="step"><span class="num">2.</span> 第二步 试题解析</div>
+
+        <div class="step"><span class="num">3.</span> 第三步 精准提升</div>
+
+    </div>
+
+    <!-- 考后任务 -->
+
+    <div class="section-title" style="margin-top:16px;">考后任务提示</div>
+
+    <div class="task-grid">
+
+        <div class="task">查看原卷</div>
+
+        <div class="task">查看答题卡</div>
+
+        <div class="task">查看小题分</div>
+
+        <div class="task">成绩解读</div>
+
+        <div class="task">试卷解读</div>
+
+        <div class="task">失分总结</div>
+
+    </div>
+
+    <!-- 重置 -->
+
+    <div class="reset-wrap">
+
+        <button id="resetBtn">↻ 恢复默认</button>
+
+    </div>
+
+</div>
+
+<script>
+
+    (function() {
+
+        const DEFAULT_DATA = [
+
+            { name: '语文', score: 44 },
+
+            { name: '数学', score: 62 },
+
+            { name: '英语', score: 18 },
+
+            { name: '历史', score: 55 },
+
+            { name: '道德与法治', score: 38 },
+
+            { name: '地理', score: 42 },
+
+            { name: '生物', score: 53 }
+
+        ];
+
+        const MAX_SCORE = 100;
+
+        let subjects = [];
+
+        const totalDisplay = document.getElementById('totalDisplay');
+
+        const subjectListEl = document.getElementById('subjectList');
+
+        function calcTotal() {
+
+            return subjects.reduce((sum, s) => sum + s.score, 0);
+
+        }
+
+        function render() {
+
+            const total = calcTotal();
+
+            totalDisplay.innerHTML = total + ' <small>/ 700</small>';
+
+            let html = '';
+
+            subjects.forEach((item, index) => {
+
+                const isOver = item.score > MAX_SCORE;
+
+                html += `
+
+                    <div class="subject-row">
+
+                        <span class="name">${item.name}</span>
+
+                        <div class="score-wrap">
+
+                            <input type="number" 
+
+                                   class="score-input ${isOver ? 'error' : ''}"
+
+                                   value="${item.score}"
+
+                                   min="0"
+
+                                   step="0.5"
+
+                                   data-index="${index}">
+
+                            <span class="max">/ ${MAX_SCORE}</span>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+            subjectListEl.innerHTML = html;
+
+            document.querySelectorAll('.score-input').forEach(input => {
+
+                input.addEventListener('input', function() {
+
+                    const idx = parseInt(this.dataset.index, 10);
+
+                    const val = parseFloat(this.value);
+
+                    if (isNaN(val) || this.value.trim() === '') return;
+
+                    subjects[idx].score = val;
+
+                    render();
+
+                });
+
+                input.addEventListener('blur', function() {
+
+                    const idx = parseInt(this.dataset.index, 10);
+
+                    let val = parseFloat(this.value);
+
+                    if (isNaN(val) || this.value.trim() === '') val = 0;
+
+                    if (val < 0) val = 0;
+
+                    subjects[idx].score = val;
+
+                    render();
+
+                });
+
+            });
+
+        }
+
+        function resetData() {
+
+            subjects = DEFAULT_DATA.map(item => ({
+
+                name: item.name,
+
+                score: item.score
+
+            }));
+
+            render();
+
+        }
+
+        resetData();
+
+        document.getElementById('resetBtn').addEventListener('click', resetData);
+
+    })();
+
+</script>
+
+</body>
+
+</html>
